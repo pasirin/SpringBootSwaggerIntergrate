@@ -7,6 +7,7 @@ import com.example.demo.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @org.springframework.stereotype.Service
@@ -67,5 +68,9 @@ public class ProductService implements Service<ProductRequest, Product> {
     } else {
       return productRepository.findById(id);
     }
+  }
+
+  public List<Product> getByName(String name) {
+    return productRepository.findByNameLike("%" + name + "%");
   }
 }

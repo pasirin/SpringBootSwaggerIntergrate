@@ -19,17 +19,9 @@ public class MessageResponse {
     return this;
   }
 
-  public String getMessage() {
-    return message;
-  }
-
   public MessageResponse setMessage(String message) {
     this.message = message;
     return this;
-  }
-
-  public boolean getStatus() {
-    return success;
   }
 
   public static MessageResponse status(boolean success) {
@@ -38,6 +30,14 @@ public class MessageResponse {
 
   public static MessageResponse body(String message) {
     return new MessageResponse(message);
+  }
+
+  public String getMessage() {
+    return message;
+  }
+
+  public boolean getStatus() {
+    return success;
   }
 
   public MessageResponse build() {

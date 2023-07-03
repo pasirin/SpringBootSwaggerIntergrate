@@ -112,4 +112,23 @@ public class OrderService implements Service<OrderRequest, Order> {
       return orderRepository.findById(id);
     }
   }
+
+  public Optional<Order> getByCustomerId(Long id) {
+    return orderRepository.findByCustomerId(id);
+  }
+
+  public Optional<Order> getByCustomerIdAndOrderId(Long customerId, Long orderId) {
+    return orderRepository.findByCustomerIdAndId(customerId, orderId);
+  }
+
+  public MessageResponse deleteByCustomerIdAndOrderId(Long customerId, Long orderId) {
+    if (!orderRepository.existsById(orderId)) {
+      return MessageResponse.body("There Are No Order with the id: " + orderId);
+    } else if (!orderRepository.existsByCustomer(customerId)) {
+      return MessageResponse.body("There Are No Order with the customer id: " + customerId);
+    } else {
+      orderRepository.deleteByCustomerIdAndId(customerId, orderId);
+      return MessageResponse.status(true);
+    }
+  }
 }
