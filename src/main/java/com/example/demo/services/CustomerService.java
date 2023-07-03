@@ -1,11 +1,13 @@
 package com.example.demo.services;
 
 import com.example.demo.models.Customer;
+import com.example.demo.models.User;
 import com.example.demo.payload.request.CustomerRequest;
 import com.example.demo.payload.response.MessageResponse;
 import com.example.demo.repository.CustomerRepository;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -86,6 +88,20 @@ public class CustomerService implements Service<CustomerRequest, Customer> {
       return Optional.empty();
     } else {
       return customerRepository.findById(id);
+    }
+  }
+
+  public Long getUserIdFromUsername(String name) {
+    Optional<User> user = userRepository.findByUsername(name);
+    return user.isEmpty() ? null : user.get().getId();
+  }
+
+  public Optional<Customer> getByUsername(String username) {
+    Long id = getUserIdFromUsername(username);
+    if (id == null) {
+      return Optional.empty();
+    } else {
+      return customerRepository.findByUserId(id);
     }
   }
 }
